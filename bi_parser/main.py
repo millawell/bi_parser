@@ -28,6 +28,16 @@ def parse_file(file_, spec):
 
         del parents[parents.index(elem)]
 
+    def __beautify_parents(parent_list):
+        spec_str = "{{{}}}".format(spec['tei'])
+
+        return map(lambda x: x.tag.replace(spec_str, ""),
+            map(
+                lambda x: x if isinstance(x, str) else x.tag,
+                parent_list
+            )
+        )
+
     input_string = file_.read()
 
     tree = etree.fromstring(input_string)
@@ -40,13 +50,13 @@ def parse_file(file_, spec):
         inner, tail = element.text, element.tail
         content_slices_and_their_parents.append({
             "content": inner if inner is not None else "",
-            "parents": parents+[element],
+            "parents": ">".join(__beautify_parents(parents+[element])),
             "filename": file_.name
         })
 
         content_slices_and_their_parents.append({
             "content": tail if tail is not None else "",
-            "parents": parents,
+            "parents": ">".join(__beautify_parents(parents)),
             "filename": file_.name
         })
 
