@@ -7,9 +7,11 @@ setup(name='bi_parser',
       author='David Lassner',
       author_email='davidlassner@gmail.com',
       license='MIT',
-      packages=['bi_parser'],
+      packages=['berliner_intellektuelle_preprocessing'],
       install_requires=[
           'lxml',
-          'pandas'
+          'spacy',
+          'tqdm',
+          'cPickle'
       ],
       zip_safe=False)
